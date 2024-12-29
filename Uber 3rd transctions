@@ -1,0 +1,49 @@
+# User's Third Transaction
+**Uber SQL Interview Question**
+### Question:
+Assume you are given the table below on Uber transactions made by users. 
+Write a query to obtain the third transaction of every user. 
+The output should include the user id, spend, and transaction date.
+
+#### Transactions Table:
+| Column Name         | Type        |
+|---------------------|-------------|
+| user_id             | integer     |
+| spend               | decimal     |
+| transaction_date    | timestamp   |
+
+#### Example Input:
+| user_id | spend  | transaction_date     |
+|---------|--------|----------------------|
+| 111     | 100.50 | 2022-01-08 12:00:00  |
+| 111     | 55.00  | 2022-01-10 12:00:00  |
+| 121     | 36.00  | 2022-01-18 12:00:00  |
+| 145     | 24.99  | 2022-01-26 12:00:00  |
+| 111     | 89.60  | 2022-02-05 12:00:00  |
+
+#### Example Output:
+| user_id | spend  | transaction_date     |
+|---------|--------|----------------------|
+| 111     | 89.60  | 2022-02-05 12:00:00  |
+
+### Answer:
+
+```sql
+WITH RankedTransactions AS (
+    SELECT
+        user_id,
+        spend,
+        transaction_date,
+        ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY transaction_date) AS transaction_rank
+    FROM
+        transactions
+)
+SELECT
+    user_id,
+    spend,
+    transaction_date
+FROM
+    RankedTransactions
+WHERE
+    transaction_rank = 3;
+```
