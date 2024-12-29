@@ -1,14 +1,4 @@
-# Leetcode-75
-Two sum leetcode 
---Python code 
-
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-            prevMap={} 
-
-            for i,n in enumerate(nums):
-                diff=target-n
-                if diff in prevMap:
-                    return [prevMap[diff],i]
-                prevMap[n]=i
-            return
+SQL
+Data Lemur : https://datalemur.com/questions?category=SQL&difficulty=Easy
+LeetCode :https://leetcode.com/u/yatishdurga1414/
+SQLZOO 
