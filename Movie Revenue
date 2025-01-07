@@ -1,0 +1,12 @@
+SELECT
+m.movie_id, title, budget, revenue, currency, unit,
+CASE 
+WHEN unit="thousands" THEN ROUND((revenue-budget)/1000,1) 
+WHEN unit="billions" THEN ROUND((revenue-budget)*1000,1) 
+ ELSE ROUND(revenue-budget,1) 
+END as profit_mln,
+(revenue-budget) as profit
+FROM movies m
+JOIN financials f ON m.movie_id=f.movie_id
+WHERE industry="bollywood"
+order by profit desc;
