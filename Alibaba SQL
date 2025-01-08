@@ -1,0 +1,50 @@
+# Compressed Mean - Alibaba SQL Interview Question
+
+## Question
+
+You're tasked with calculating the mean number of items per order on Alibaba, rounded to 1 decimal place. The problem involves two columns:
+
+- **`item_count`**: The number of items in each order.
+- **`order_occurrences`**: The count of orders for each respective `item_count`.
+
+### Example Input:
+
+| item_count | order_occurrences |
+|------------|-------------------|
+| 1          | 500               |
+| 2          | 1000              |
+| 3          | 800               |
+| 4          | 1000              |
+
+### Example Output:
+
+| mean |
+|------|
+| 2.7  |
+
+### Explanation:
+
+The mean is calculated as follows:
+
+1. **Total Items**: Multiply `item_count` by `order_occurrences` for each row and sum the results:  
+   `(1 * 500) + (2 * 1000) + (3 * 800) + (4 * 1000) = 8900`
+
+2. **Total Orders**: Sum the `order_occurrences`:  
+   `500 + 1000 + 800 + 1000 = 3300`
+
+3. **Mean**: Divide total items by total orders and round to 1 decimal place:  
+   `Mean = 8900 / 3300 = 2.7`
+
+---
+
+## Solution
+
+Here’s the correct SQL query to calculate the mean:
+
+```sql
+SELECT 
+  ROUND(
+    SUM(item_count::DECIMAL * order_occurrences)
+    / SUM(order_occurrences),
+  1) AS mean
+FROM items_per_order;
