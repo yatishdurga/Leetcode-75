@@ -1,0 +1,46 @@
+# 2843. Count Symmetric Integers
+
+**Difficulty:** Easy  
+**Status:** Solved  
+
+## Problem Description
+
+You are given two positive integers `low` and `high`.
+
+An integer `x` consisting of `2 * n` digits is **symmetric** if the sum of the first `n` digits of `x` is equal to the sum of the last `n` digits of `x`. Numbers with an odd number of digits are never symmetric.
+
+Return the number of symmetric integers in the range `[low, high]`.
+
+## Examples
+
+**Example 1:**
+
+
+## Constraints
+
+- `1 <= low <= high <= 10^4`
+
+## Solution
+
+### Python Implementation
+
+```python
+class Solution:
+    def countSymmetricIntegers(self, low: int, high: int) -> int:
+        count = 0
+        for num in range(low, high + 1):
+            s = str(num)
+            length = len(s)
+            # Skip numbers with an odd number of digits
+            if length % 2 != 0:
+                continue
+            half = length // 2
+            first_half = s[:half]
+            second_half = s[half:]
+
+            sum_first_half = sum(int(digit) for digit in first_half)
+            sum_second_half = sum(int(digit) for digit in second_half)
+
+            if sum_first_half == sum_second_half:
+                count += 1
+        return count
