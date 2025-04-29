@@ -1,0 +1,57 @@
+Step 1: Understand the problem
+You have a list of numbers (nums) and one special number called target.
+
+You need to find two numbers from your list that add up exactly to the target number.
+You should then tell their indices (positions).
+
+Important:
+You cannot use the same number twice.
+There is exactly one pair of numbers that add up to the target.
+
+📝 Step 2: Example
+Let’s see a clear example:
+
+
+nums = [2, 7, 11, 15]
+target = 9
+Now, find two numbers that add up to 9:
+
+Check: 2 + 7 = 9 ✔️ (Correct!)
+
+The position of 2 is 0, and the position of 7 is 1.
+
+Thus, the answer is [0, 1].
+
+💡 Step 3: Thinking how to solve
+One easy but slow way is:
+
+Take each number.
+
+Check it with every other number to see if they add up to the target.
+
+This is slow (called O(n²), pronounced "Oh-n-squared"), because for each number, you look at all other numbers again and again.
+
+A smarter and faster way is:
+
+Use a "dictionary" (like a quick lookup table or notebook).
+
+Every time you check a number, remember it and its position.
+
+For each new number, see if the number you need (target minus this number) is already in the notebook.
+
+This way, you only check once per number, which is faster (O(n))!
+
+
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        prevMap = {}  # this is our notebook: number → position
+
+        for i, n in enumerate(nums):  # i = position, n = number
+            diff = target - n  # what number do we need?
+
+            if diff in prevMap:  # if we already have the needed number
+                return [prevMap[diff], i]  # we found the pair!
+
+            prevMap[n] = i  # if not found, remember this number and its position
